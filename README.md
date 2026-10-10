@@ -242,7 +242,7 @@ Configuré los dos switches por CLI desde la consola de GNS3. Los comandos está
 
 ### 7.1 Arranque inicial por CLI
 
-Entré por la consola con `admin` y la contraseña vacía, y el equipo me obligó a crear una nueva (`Forti1325!`). Después le di IP a `port1`:
+Entré por la consola con `admin` y la contraseña vacía, y el equipo me obligó a crear una nueva (`1234`). Después le di IP a `port1`:
 
 ```
 config system interface
