@@ -1,0 +1,8 @@
+# PC-USER (VLAN 10) y PC-ADMIN (VLAN 20): IP por DHCP del FortiGate
+# En PC-ADMIN agregue ademas "mtu: 1300" en un segundo archivo de netplan.
+network:
+  version: 2
+  ethernets:
+    ens3:
+      dhcp4: true
+      dhcp-identifier: mac

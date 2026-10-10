@@ -1,0 +1,75 @@
+! =====================================================================
+!  SW-DMZ-1325 - Switch de la DMZ (servidores en 10.13.25.144/28)
+!  Omar Paulino - 20251325
+! =====================================================================
+enable
+configure terminal
+!
+hostname SW-DMZ-1325
+no ip domain-lookup
+service password-encryption
+username admin secret Cisco1325!
+enable secret Cisco1325!
+no cdp run
+spanning-tree mode rapid-pvst
+errdisable recovery cause psecure-violation
+!
+vlan 30
+ name DMZ
+vlan 99
+ name SIN-USO
+exit
+!
+! --- Uplink hacia FW-1325 port4 ---
+interface GigabitEthernet0/0
+ description UPLINK-FW-1325-port4
+ switchport mode access
+ switchport access vlan 30
+ switchport nonegotiate
+ no shutdown
+!
+! --- Servidores (una MAC por puerto) ---
+interface GigabitEthernet0/1
+ description WEB-CAJA
+ switchport mode access
+ switchport access vlan 30
+ switchport nonegotiate
+ switchport port-security
+ switchport port-security mac-address sticky
+ spanning-tree portfast edge
+ spanning-tree bpduguard enable
+ no shutdown
+!
+interface GigabitEthernet0/2
+ description DB-SERVER
+ switchport mode access
+ switchport access vlan 30
+ switchport nonegotiate
+ switchport port-security
+ switchport port-security mac-address sticky
+ spanning-tree portfast edge
+ spanning-tree bpduguard enable
+ no shutdown
+!
+interface GigabitEthernet0/3
+ description WEB-INVENTARIO
+ switchport mode access
+ switchport access vlan 30
+ switchport nonegotiate
+ switchport port-security
+ switchport port-security mac-address sticky
+ spanning-tree portfast edge
+ spanning-tree bpduguard enable
+ no shutdown
+!
+! --- Puertos sin uso ---
+interface range GigabitEthernet1/0 - 3
+ description SIN-USO
+ switchport mode access
+ switchport access vlan 99
+ shutdown
+!
+ip ssh server algorithm encryption aes128-ctr aes192-ctr aes256-ctr
+ip ssh client algorithm encryption aes128-ctr aes192-ctr aes256-ctr
+end
+write memory

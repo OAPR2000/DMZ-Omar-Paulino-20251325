@@ -1,0 +1,84 @@
+! =====================================================================
+!  SW-1325 - Switch de la LAN (VLAN 10 Usuarios y VLAN 20 Administrativos)
+!  Omar Paulino - 20251325
+! =====================================================================
+enable
+configure terminal
+!
+hostname SW-1325
+no ip domain-lookup
+service password-encryption
+username admin secret Cisco1325!
+enable secret Cisco1325!
+no cdp run
+spanning-tree mode rapid-pvst
+errdisable recovery cause psecure-violation
+!
+! --- VLAN ---
+vlan 10
+ name USUARIOS
+vlan 20
+ name ADMIN
+vlan 99
+ name NATIVA-SIN-USO
+exit
+!
+! --- DHCP snooping y Dynamic ARP Inspection en las VLAN de usuarios ---
+ip dhcp snooping
+ip dhcp snooping vlan 10,20
+no ip dhcp snooping information option
+ip arp inspection vlan 10,20
+!
+! --- Trunk hacia FW-1325 port2 ---
+interface GigabitEthernet0/0
+ description TRUNK-a-FORTIGATE-port2
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ switchport trunk native vlan 99
+ switchport trunk allowed vlan 10,20
+ switchport nonegotiate
+ ip dhcp snooping trust
+ ip arp inspection trust
+ no shutdown
+!
+! --- PC-USER (VLAN 10) ---
+interface GigabitEthernet0/1
+ description USUARIO-PC-USER-VLAN10
+ switchport mode access
+ switchport access vlan 10
+ switchport nonegotiate
+ switchport port-security
+ switchport port-security violation restrict
+ switchport port-security mac-address sticky
+ spanning-tree portfast edge
+ spanning-tree bpduguard enable
+ ip dhcp snooping limit rate 15
+ ip arp inspection limit rate 100
+ no shutdown
+!
+! --- PC-ADMIN (VLAN 20) ---
+interface GigabitEthernet0/2
+ description PC-ADMIN-VLAN20
+ switchport mode access
+ switchport access vlan 20
+ switchport nonegotiate
+ switchport port-security
+ switchport port-security violation restrict
+ switchport port-security mac-address sticky
+ spanning-tree portfast edge
+ spanning-tree bpduguard enable
+ ip dhcp snooping limit rate 15
+ ip arp inspection limit rate 100
+ no shutdown
+!
+! --- Puertos sin uso: VLAN 99 y apagados ---
+interface range GigabitEthernet0/3, GigabitEthernet1/0 - 3
+ description SIN-USO
+ switchport mode access
+ switchport access vlan 99
+ shutdown
+!
+ip ssh server algorithm encryption aes128-ctr aes192-ctr aes256-ctr
+ip ssh client algorithm encryption aes128-ctr aes192-ctr aes256-ctr
+end
+write memory

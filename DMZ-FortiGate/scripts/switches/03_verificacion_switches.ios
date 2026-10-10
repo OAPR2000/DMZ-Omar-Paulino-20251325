@@ -1,0 +1,10 @@
+! Comandos de verificacion (SW-1325 y SW-DMZ-1325)
+show vlan brief
+show interfaces trunk
+show interfaces status
+show port-security
+show port-security address
+show ip dhcp snooping
+show ip dhcp snooping binding
+show ip arp inspection vlan 10,20
+show running-config

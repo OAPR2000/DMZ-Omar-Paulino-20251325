@@ -1,0 +1,11 @@
+# Comandos de verificacion en la CLI de FW-1325
+get system status
+get system interface physical
+get router info routing-table all
+show firewall policy
+diagnose sys session list
+execute ping-options source 10.13.25.145
+execute ping 10.13.25.147
+execute ping archive.ubuntu.com
+execute log filter category 0
+execute log display
