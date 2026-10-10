@@ -7,7 +7,7 @@
 
 ## Video de demostración
 
-https://youtu.be/xKScNNcrI3c?si=FjHMRrrWz03seq2B
+https://youtu.be/xKScNNcrI3c?si=AJ3Qva9IQE0mAbk5
 
 En el video muestro la topología, la configuración del FortiGate y de los switches, y las pruebas de cada requisito:
 
