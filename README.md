@@ -30,7 +30,6 @@ En el video muestro la topología, la configuración del FortiGate y de los swit
 9. [Equipos de usuario](#9-equipos-de-usuario)
 10. [Resumen de las reglas de acceso](#10-resumen-de-las-reglas-de-acceso)
 11. [Pruebas y resultados](#11-pruebas-y-resultados)
-12. [Problemas que encontré y cómo los resolví](#12-problemas-que-encontré-y-cómo-los-resolví)
 
 ---
 
