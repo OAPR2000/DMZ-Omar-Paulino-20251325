@@ -7,7 +7,7 @@
 
 ## Video de demostración
 
-ENLACE_DEL_VIDEO
+https://youtu.be/xKScNNcrI3c?si=FjHMRrrWz03seq2B
 
 En el video muestro la topología, la configuración del FortiGate y de los switches, y las pruebas de cada requisito:
 
@@ -676,13 +676,3 @@ show port-security         ! una MAC sticky por puerto de equipo
 show ip dhcp snooping      ! snooping activo en VLAN 10 y 20, Gi0/0 trusted
 show interfaces status     ! puertos sin uso en estado disabled
 ```
-
----
-
-## 12. Problemas que encontré y cómo los resolví
-
-| Problema | Causa | Solución |
-| --- | --- | --- |
-| No podía usar el objeto `NET-DMZ` en las políticas de `port4` | El objeto estaba asociado a otra interfaz, y el campo *Interface* limita en qué políticas se puede usar | Cambié su *Interface* a **any**, igual que en los demás objetos de la DMZ |
-| Al crear la segunda red de usuarios, `10.13.25.128/25` chocaba con la DMZ | La DMZ `10.13.25.144/28` está dentro de ese bloque | Usé `10.25.13.0/25` para la VLAN 20 |
-| La página de bloqueo salía con el texto en inglés por defecto | No había editado el Replacement Message | Personalicé *URL Block Page* (sección 7.9) |
